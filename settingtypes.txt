@@ -1,0 +1,3 @@
+
+# Disable blood splatter when attacking mobs.
+mobs_disable_blood (Disable Mob blood) bool false

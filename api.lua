@@ -1,4 +1,5 @@
-spidermob = {}
+
+spidermob.disable_blood = core.settings:get_bool("mobs_disable_blood", false)
 
 function spidermob:register_mob(name, def)
 	minetest.register_entity(name, {
@@ -697,7 +698,7 @@ function spidermob:register_mob(name, def)
 
 			--blood_particles
 
-			if self.blood_amount > 0 and pos then
+			if not spidermob.disable_blood and self.blood_amount > 0 and pos then
 				local p = pos
 				p.y = p.y + self.blood_offset
 

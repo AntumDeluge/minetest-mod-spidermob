@@ -1,4 +1,9 @@
-dofile(minetest.get_modpath("spidermob").."/api.lua")
+
+spidermob = {}
+spidermob.modname = core.get_current_modname()
+spidermob.modpath = core.get_modpath(spidermob.modname)
+
+dofile(spidermob.modpath .. "/api.lua")
 
 minetest.register_craftitem("spidermob:meat", {
 	description = "Cooked Meat",
