@@ -51,7 +51,7 @@ cmer.register_mob({
 	drops = spider_drops,
 	combat = {
 		attack_damage = 3,
-		attack_radius = 1.2,
+		attack_radius = 1.3,
 		search_enemy = true,
 		search_radius = 15,
 		search_type = "player",
