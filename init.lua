@@ -19,7 +19,7 @@ local spawn_nodes = {
 
 
 cmer.register_mob({
-	name = "spidermob:spider",
+	name = "creatures:spider",
 	stats = {
 		hp = 30,
 		hostile = true,
