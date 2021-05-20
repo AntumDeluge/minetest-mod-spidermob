@@ -207,9 +207,9 @@ function spidermob:register_mob(name, def)
 				end
 				local x = math.sin(yaw) * -2
 				local z = math.cos(yaw) * 2
-				self.object:setacceleration({x=x, y=-10, z=z})
+				self.object:set_acceleration({x=x, y=-10, z=z})
 			else
-				self.object:setacceleration({x=0, y=-10, z=0})
+				self.object:set_acceleration({x=0, y=-10, z=0})
 			end
 
 			if self.disable_fall_damage and self.object:get_velocity().y == 0 then
@@ -590,7 +590,7 @@ function spidermob:register_mob(name, def)
 			self.object:set_hp( newHP )
 
 			self.object:set_armor_groups({fleshy=self.armor})
-			self.object:setacceleration({x=0, y=-10, z=0})
+			self.object:set_acceleration({x=0, y=-10, z=0})
 			self.state = "stand"
 			self.object:set_velocity({x=0, y=self.object:get_velocity().y, z=0})
 			self.object:set_yaw(math.random(1, 360)/180*math.pi)
