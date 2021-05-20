@@ -47,7 +47,7 @@ function spidermob:register_mob(name, def)
 		blood_texture = def.blood_texture or "spidermob_blood.png",
 		rewards = def.rewards or nil,
 		animaltype = def.animaltype,
-		
+
 		stimer = 0,
 		timer = 0,
 		env_damage_timer = 0, -- only if state = "attack"
@@ -59,7 +59,7 @@ function spidermob:register_mob(name, def)
 		tamed = false,
 		last_state = nil,
 		pause_timer = 0,
-		
+
 		do_attack = function(self, player, dist)
 			if self.state ~= "attack" then
 				if self.sounds.war_cry then
@@ -72,7 +72,7 @@ function spidermob:register_mob(name, def)
 				self.attack.dist = dist
 			end
 		end,
-		
+
 		set_velocity = function(self, v)
 			local yaw = self.object:get_yaw()
 			if self.drawtype == "side" then
@@ -82,12 +82,12 @@ function spidermob:register_mob(name, def)
 			local z = math.cos(yaw) * v
 			self.object:set_velocity({x=x, y=self.object:get_velocity().y, z=z})
 		end,
-		
+
 		get_velocity = function(self)
 			local v = self.object:get_velocity()
 			return (v.x^2 + v.z^2)^(0.5)
 		end,
-		
+
 		in_fov = function(self,pos)
 			-- checks if POS is in self's FOV
 			local yaw = self.object:get_yaw()
@@ -100,18 +100,18 @@ function spidermob:register_mob(name, def)
 			local ps = math.sqrt(pos.x^2 + pos.z^2)
 			local d = { x = vx / ds, z = vz / ds }
 			local p = { x = pos.x / ps, z = pos.z / ps }
-			
+
 			local an = ( d.x * p.x ) + ( d.z * p.z )
-			
+
 			local a = math.deg( math.acos( an ) )
-			
+
 			if a > ( self.fov / 2 ) then
 				return false
 			else
 				return true
 			end
 		end,
-		
+
 		set_animation = function(self, type)
 			if not self.animation then
 				return
@@ -169,13 +169,13 @@ function spidermob:register_mob(name, def)
 				end
 			end
 		end,
-		
+
 		on_step = function(self, dtime)
-			
+
 			if self.type == "monster" and minetest.settings:get_bool("only_peaceful_spidermob") then
 				self.object:remove()
 			end
-			
+
 			self.lifetimer = self.lifetimer - dtime
 			if self.lifetimer <= 0 and not self.tamed and self.type ~= "npc" then
 				local player_count = 0
@@ -199,7 +199,7 @@ function spidermob:register_mob(name, def)
 --					minetest.set_node(self.object:get_pos(), {name="mobs:egg"})
 --				end
 --			end
-			
+
 			if self.object:get_velocity().y > 0.1 then
 				local yaw = self.object:get_yaw()
 				if self.drawtype == "side" then
@@ -211,7 +211,7 @@ function spidermob:register_mob(name, def)
 			else
 				self.object:setacceleration({x=0, y=-10, z=0})
 			end
-			
+
 			if self.disable_fall_damage and self.object:get_velocity().y == 0 then
 				if not self.old_y then
 					self.old_y = self.object:get_pos().y
@@ -227,7 +227,7 @@ function spidermob:register_mob(name, def)
 					self.old_y = self.object:get_pos().y
 				end
 			end
-			
+
 			-- if pause state then this is where the loop ends
 			-- pause is only set after a monster is hit
 			if self.pause_timer > 0 then
@@ -237,7 +237,7 @@ function spidermob:register_mob(name, def)
 				end
 				return
 			end
-			
+
 			self.timer = self.timer+dtime
 			if self.state ~= "attack" then
 				if self.timer < 1 then
@@ -245,15 +245,15 @@ function spidermob:register_mob(name, def)
 				end
 				self.timer = 0
 			end
-			
+
 			if self.sounds and self.sounds.random and math.random(1, 100) <= 1 then
 				minetest.sound_play(self.sounds.random, {object = self.object})
 			end
-			
+
 			local do_env_damage = function(self)
 				local pos = self.object:get_pos()
 				local n = minetest.get_node(pos)
-				
+
 				if self.light_damage and self.light_damage ~= 0
 					and pos.y>0
 					and minetest.get_node_light(pos)
@@ -266,7 +266,7 @@ function spidermob:register_mob(name, def)
 						self.object:remove()
 					end
 				end
-				
+
 				if self.water_damage and self.water_damage ~= 0 and
 					minetest.get_item_group(n.name, "water") ~= 0
 				then
@@ -275,7 +275,7 @@ function spidermob:register_mob(name, def)
 						self.object:remove()
 					end
 				end
-				
+
 				if self.lava_damage and self.lava_damage ~= 0 and
 					minetest.get_item_group(n.name, "lava") ~= 0
 				then
@@ -285,7 +285,7 @@ function spidermob:register_mob(name, def)
 					end
 				end
 			end
-			
+
 			self.env_damage_timer = self.env_damage_timer + dtime
 			if self.state == "attack" and self.env_damage_timer > 1 then
 				self.env_damage_timer = 0
@@ -293,7 +293,7 @@ function spidermob:register_mob(name, def)
 			elseif self.state ~= "attack" then
 				do_env_damage(self)
 			end
-			
+
 			-- FIND SOMEONE TO ATTACK
 			if ( self.type == "monster" or self.type == "barbarian" ) and minetest.settings:get_bool("enable_damage") and self.state ~= "attack" then
 				local s = self.object:get_pos()
@@ -311,7 +311,7 @@ function spidermob:register_mob(name, def)
 							type = obj.type
 						end
 					end
-					
+
 					if type == "player" or type == "npc" then
 						local s = self.object:get_pos()
 						local p = player:get_pos()
@@ -328,7 +328,7 @@ function spidermob:register_mob(name, def)
 					end
 				end
 			end
-			
+
 			-- NPC FIND A MONSTER TO ATTACK
 --			if self.type == "npc" and self.attacks_monsters and self.state ~= "attack" then
 --				local s = self.object:get_pos()
@@ -358,7 +358,7 @@ function spidermob:register_mob(name, def)
 					end
 				end
 			end
-			
+
 			if self.following and self.following:is_player() then
 				if self.following:get_wielded_item():get_name() ~= self.follow then
 					self.following = nil
@@ -401,7 +401,7 @@ function spidermob:register_mob(name, def)
 					end
 				end
 			end
-			
+
 			if self.state == "stand" then
 				-- randomly turn
 				if math.random(1, 4) == 1 then
@@ -411,7 +411,7 @@ function spidermob:register_mob(name, def)
 					local yaw = 0
 					if self.type == "npc" then
 						local o = minetest.get_objects_inside_radius(self.object:get_pos(), 3)
-						
+
 						for _,o in ipairs(o) do
 							if o:is_player() then
 								lp = o:get_pos()
@@ -428,7 +428,7 @@ function spidermob:register_mob(name, def)
 						if lp.x > s.x then
 							yaw = yaw+math.pi
 						end
-					else 
+					else
 						yaw = self.object:get_yaw()+((math.random(0,360)-180)/180*math.pi)
 					end
 					self.object:set_yaw(yaw)
@@ -476,7 +476,7 @@ function spidermob:register_mob(name, def)
 				else
 					self.attack.dist = dist
 				end
-				
+
 				local vec = {x=p.x-s.x, y=p.y-s.y, z=p.z-s.z}
 				local yaw = math.atan(vec.z/vec.x)+math.pi/2
 				if self.drawtype == "side" then
@@ -547,7 +547,7 @@ function spidermob:register_mob(name, def)
 				else
 					self.attack.dist = dist
 				end
-				
+
 				local vec = {x=p.x-s.x, y=p.y-s.y, z=p.z-s.z}
 				local yaw = math.atan(vec.z/vec.x)+math.pi/2
 				if self.drawtype == "side" then
@@ -558,7 +558,7 @@ function spidermob:register_mob(name, def)
 				end
 				self.object:set_yaw(yaw)
 				self.set_velocity(self, 0)
-				
+
 				if self.timer > self.shoot_interval and math.random(1, 100) <= 60 then
 					self.timer = 0
 
@@ -585,7 +585,7 @@ function spidermob:register_mob(name, def)
 		on_activate = function(self, staticdata, dtime_s)
 			-- reset HP
 			local pos = self.object:get_pos()
-			local distance_rating = ( ( get_distance({x=0,y=0,z=0},pos) ) / 20000 )	
+			local distance_rating = ( ( get_distance({x=0,y=0,z=0},pos) ) / 20000 )
 			local newHP = self.hp_min + math.floor( self.hp_max * distance_rating )
 			self.object:set_hp( newHP )
 
@@ -636,13 +636,13 @@ function spidermob:register_mob(name, def)
 					for _,drop in ipairs(self.drops) do
 						if math.random(1, drop.chance) == 1 then
 							local d = ItemStack(drop.name.." "..math.random(drop.min, drop.max))
---							default.drop_item(pos,d)
+							--default.drop_item(pos,d)
 							local pos2 = pos
 							pos2.y = pos2.y + 0.5 -- drop items half block higher
 							minetest.add_item(pos2,d)
 						end
 					end
-					
+
 					if self.sounds.death ~= nil then
 						minetest.sound_play(self.sounds.death,{
 							object = self.object,
@@ -665,7 +665,7 @@ function spidermob:register_mob(name, def)
 						local inradius = minetest.get_objects_inside_radius(hitter:get_pos(),10)
 						for _, oir in pairs(inradius) do
 							local obj = oir:get_luaentity()
-							if obj then	
+							if obj then
 								if obj.type == "npc" and obj.rewards ~= nil then
 									local yaw = nil
 									local lp = hitter:get_pos()
@@ -691,7 +691,7 @@ function spidermob:register_mob(name, def)
 							end
 						end
 					end
-					
+
 				end
 			end
 
@@ -733,7 +733,7 @@ function spidermob:register_mob(name, def)
 			local v = self.object:get_velocity()
 			if v.y ~= 0 then
 				ykb = 0
-			end 
+			end
 
 			self.object:set_velocity({x=dir.x*kb,y=ykb,z=dir.z*kb})
 			self.pause_timer = r
@@ -756,13 +756,13 @@ function spidermob:register_mob(name, def)
 			end
 
 		end,
-		
+
 	})
 end
 
 spidermob.spawning_spidermob = {}
 function spidermob:register_spawn(name, nodes, max_light, min_light, chance, active_object_count, max_height, spawn_func)
-	spidermob.spawning_spidermob[name] = true	
+	spidermob.spawning_spidermob[name] = true
 	minetest.register_abm({
 		nodenames = nodes,
 		neighbors = {"air"},
@@ -775,7 +775,7 @@ function spidermob:register_spawn(name, nodes, max_light, min_light, chance, act
 			if not spidermob.spawning_spidermob[name] then
 				return
 			end
-			
+
 			pos.y = pos.y+1
 			if not minetest.get_node_light(pos) then
 				return
@@ -790,16 +790,14 @@ function spidermob:register_spawn(name, nodes, max_light, min_light, chance, act
 				return
 				end
 
-			if minetest.registered_nodes[minetest.get_node(pos).name].walkable then -- == true then
-	--print ("WALKABLE",pos.x, pos.y, pos.z, minetest.get_node(pos).name)
+			if minetest.registered_nodes[minetest.get_node(pos).name].walkable then
 				return
 			end
-			
+
 			pos.y = pos.y+1
 			pos.y = pos.y+1
 
-			if minetest.registered_nodes[minetest.get_node(pos).name].walkable then -- == true then
-	--print ("WALKABLE",pos.x, pos.y, pos.z, minetest.get_node(pos).name)
+			if minetest.registered_nodes[minetest.get_node(pos).name].walkable then
 				return
 			end
 
@@ -809,15 +807,15 @@ function spidermob:register_spawn(name, nodes, max_light, min_light, chance, act
 			if max_dist == nil then
 				max_dist = {x=33000,z=33000}
 			end
-	
+
 			if math.abs(pos.x) < min_dist.x or math.abs(pos.z) < min_dist.z then
 				return
 			end
-			
+
 			if math.abs(pos.x) > max_dist.x or math.abs(pos.z) > max_dist.z then
 				return
 			end
-		
+
 			if spawn_func and not spawn_func(pos, node) then
 				return
 			end
@@ -828,7 +826,7 @@ function spidermob:register_spawn(name, nodes, max_light, min_light, chance, act
 			local mob = minetest.add_entity(pos, name)
 
 			-- setup the hp, armor, drops, etc... for this specific mob
-			local distance_rating = ( ( get_distance({x=0,y=0,z=0},pos) ) / 15000 )	
+			local distance_rating = ( ( get_distance({x=0,y=0,z=0},pos) ) / 15000 )
 			if mob then
 				mob = mob:get_luaentity()
 				local newHP = mob.hp_min + math.floor( mob.hp_max * distance_rating )
@@ -883,7 +881,7 @@ local weapon = player:get_wielded_item()
 		weapon:add_wear(wear)
 		player:set_wielded_item(weapon)
 	end
-	
+
 	if weapon:get_definition().sounds ~= nil then
 		local s = math.random(0,#weapon:get_definition().sounds)
 		minetest.sound_play(weapon:get_definition().sounds[s], {
@@ -893,6 +891,5 @@ local weapon = player:get_wielded_item()
 		minetest.sound_play("default_sword_wood", {
 			object = player,
 		})
-	end	
+	end
 end
-

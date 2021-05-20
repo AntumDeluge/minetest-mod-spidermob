@@ -30,7 +30,7 @@ spidermob:register_mob("spidermob:spider", {
 	view_range = 15,
 	walk_velocity = 1,
 	run_velocity = 3,
-    armor = 200,
+	armor = 200,
 	damage = 3,
 	drops = {
 		{name = "farming:string",
@@ -41,9 +41,8 @@ spidermob:register_mob("spidermob:spider", {
 		chance = 4,
 		min = 1,
 		max = 2,},
-
 	},
-    light_resistant = true,
+	light_resistant = true,
 	drawtype = "front",
 	water_damage = 5,
 	lava_damage = 5,
@@ -72,4 +71,11 @@ spidermob:register_mob("spidermob:spider", {
 	},
 })
 
-spidermob:register_spawn("spidermob:spider", {"default:junglegrass", "default:jungleleaves", "default:jungletree"}, 20, -10, 7500, 3, 31000)
+spidermob:register_spawn(
+	"spidermob:spider",
+	{
+		"default:junglegrass",
+		"default:jungleleaves",
+		"default:jungletree",
+	},
+	20, -10, 7500, 3, 31000)
