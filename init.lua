@@ -5,22 +5,6 @@ spidermob.modpath = core.get_modpath(spidermob.modname)
 
 dofile(spidermob.modpath .. "/api.lua")
 
-minetest.register_craftitem("spidermob:meat", {
-	description = "Cooked Meat",
-	inventory_image = "spidermob_meat.png",
-	on_use = minetest.item_eat(4),
-})
-
-minetest.register_craftitem("spidermob:meat_raw", {
-	description = "Raw Meat",
-	inventory_image = "spidermob_meat_raw.png",
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "spidermob:meat",
-	recipe = "spidermob:meat_raw",
-})
 
 spidermob:register_mob("spidermob:spider", {
 	type = "monster",
@@ -42,10 +26,6 @@ spidermob:register_mob("spidermob:spider", {
 		chance = 2,
 		min = 1,
 		max = 3,},
-		{name = "spidermob:meat_raw",
-		chance = 4,
-		min = 1,
-		max = 2,},
 	},
 	light_resistant = true,
 	drawtype = "front",
