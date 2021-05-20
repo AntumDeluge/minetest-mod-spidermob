@@ -173,7 +173,7 @@ function spidermob:register_mob(name, def)
 
 		on_step = function(self, dtime)
 
-			if self.type == "monster" and minetest.settings:get_bool("only_peaceful_spidermob") then
+			if self.type == "monster" and minetest.settings:get_bool("only_peaceful_mobs") then
 				self.object:remove()
 			end
 
@@ -595,7 +595,7 @@ function spidermob:register_mob(name, def)
 			self.state = "stand"
 			self.object:set_velocity({x=0, y=self.object:get_velocity().y, z=0})
 			self.object:set_yaw(math.random(1, 360)/180*math.pi)
-			if self.type == "monster" and minetest.settings:get_bool("only_peaceful_spidermob") then
+			if self.type == "monster" and minetest.settings:get_bool("only_peaceful_mobs") then
 				self.object:remove()
 			end
 			if self.type ~= "npc" then
