@@ -6,6 +6,17 @@ spidermob.modpath = core.get_modpath(spidermob.modname)
 dofile(spidermob.modpath .. "/api.lua")
 
 
+local spider_drops = {}
+if core.registered_items["farming:string"] then
+	table.insert(spider_drops, {
+		name = "farming:string",
+		chance = 2,
+		min = 1,
+		max = 3,
+	})
+end
+
+
 spidermob:register_mob("spidermob:spider", {
 	type = "monster",
 	hp_min = 15,
@@ -21,12 +32,7 @@ spidermob:register_mob("spidermob:spider", {
 	run_velocity = 3,
 	armor = 200,
 	damage = 3,
-	drops = {
-		{name = "farming:string",
-		chance = 2,
-		min = 1,
-		max = 3,},
-	},
+	drops = spider_drops,
 	light_resistant = true,
 	drawtype = "front",
 	water_damage = 5,
