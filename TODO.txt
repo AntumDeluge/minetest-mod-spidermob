@@ -1,2 +1,4 @@
 
 TODO:
+- add localization support
+- remove unused code
