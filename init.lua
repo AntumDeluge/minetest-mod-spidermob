@@ -20,6 +20,7 @@ local spawn_nodes = {
 
 creatures.register_mob({
 	name = ":creatures:spider",
+	nametag = creatures.feature_nametags and "Spider" or nil,
 	stats = {
 		hp = 30,
 		hostile = true,
