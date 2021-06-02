@@ -3,6 +3,7 @@ spidermob = {}
 spidermob.modname = core.get_current_modname()
 spidermob.modpath = core.get_modpath(spidermob.modname)
 
+dofile(spidermob.modpath .. "/settings.lua")
 --dofile(spidermob.modpath .. "/api.lua")
 
 
@@ -24,7 +25,7 @@ creatures.register_mob({
 	stats = {
 		hp = 30,
 		hostile = true,
-		lifetime = 600, -- 10 minutes
+		lifetime = spidermob.lifetime,
 		can_jump = 1,
 	},
 	modes = {
@@ -59,8 +60,8 @@ creatures.register_mob({
 	},
 	spawning = {
 		abm_nodes = {spawn_on=spawn_nodes,},
-		abm_interval = 60,
-		abm_chance = 7500,
+		abm_interval = spidermob.spawn_interval,
+		abm_chance = spidermob.spawn_chance,
 		max_number = 3,
 		number = 1,
 		time_range = {min=0, max=23999},
