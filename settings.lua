@@ -4,7 +4,7 @@
 --  @setting spider.lifetime
 --  @settype int
 --  @default 600 (10 minutes)
-spidermob.lifetime = tonumber(core.settings:get("spider.lifetime")) or 10 * 60
+cmer_spider.lifetime = tonumber(core.settings:get("spider.lifetime")) or 10 * 60
 
 --- Spawn rate frequency.
 --
@@ -13,7 +13,7 @@ spidermob.lifetime = tonumber(core.settings:get("spider.lifetime")) or 10 * 60
 --  @settype int
 --  @default 60 (1 minute)
 --  @see [ABM definition](http://minetest.gitlab.io/minetest/definition-tables.html#abm-activeblockmodifier-definition)
-spidermob.spawn_interval = tonumber(core.settings:get("spider.spawn_interval")) or 60
+cmer_spider.spawn_interval = tonumber(core.settings:get("spider.spawn_interval")) or 60
 
 --- Chance of spawn at interval.
 --
@@ -21,4 +21,4 @@ spidermob.spawn_interval = tonumber(core.settings:get("spider.spawn_interval")) 
 --  @settype int
 --  @default 7500
 --  @see [ABM definition](http://minetest.gitlab.io/minetest/definition-tables.html#abm-activeblockmodifier-definition)
-spidermob.spawn_chance = tonumber(core.settings:get("spider.spawn_chance")) or 7500
+cmer_spider.spawn_chance = tonumber(core.settings:get("spider.spawn_chance")) or 7500

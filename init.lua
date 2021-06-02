@@ -1,10 +1,10 @@
 
 spidermob = {}
-spidermob.modname = core.get_current_modname()
-spidermob.modpath = core.get_modpath(spidermob.modname)
+cmer_spider.modname = core.get_current_modname()
+cmer_spider.modpath = core.get_modpath(cmer_spider.modname)
 
-dofile(spidermob.modpath .. "/settings.lua")
---dofile(spidermob.modpath .. "/api.lua")
+dofile(cmer_spider.modpath .. "/settings.lua")
+--dofile(cmer_spider.modpath .. "/api.lua")
 
 
 local spider_drops = {}
@@ -19,7 +19,7 @@ creatures.register_mob({
 	stats = {
 		hp = 30,
 		hostile = true,
-		lifetime = spidermob.lifetime,
+		lifetime = cmer_spider.lifetime,
 		can_jump = 1,
 	},
 	modes = {
@@ -61,8 +61,8 @@ creatures.register_mob({
 				"default:dirt_with_grass",
 			},
 		},
-		abm_interval = spidermob.spawn_interval,
-		abm_chance = spidermob.spawn_chance,
+		abm_interval = cmer_spider.spawn_interval,
+		abm_chance = cmer_spider.spawn_chance,
 		max_number = 3,
 		number = {min=1, max=2},
 		time_range = {min=0, max=23999},
