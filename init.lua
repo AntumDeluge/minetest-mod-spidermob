@@ -63,7 +63,7 @@ creatures.register_mob({
 		abm_interval = spidermob.spawn_interval,
 		abm_chance = spidermob.spawn_chance,
 		max_number = 3,
-		number = 1,
+		number = {min=1, max=2},
 		time_range = {min=0, max=23999},
 		light = {min=0, max=core.LIGHT_MAX},
 		height_limit = {min=-500, max=31000},
