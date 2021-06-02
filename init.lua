@@ -12,13 +12,6 @@ if core.registered_items["farming:string"] then
 	table.insert(spider_drops, {"farming:string", {min=1, max=3}, chance=0.5})
 end
 
-local spawn_nodes = {
-	"group:leaves",
-	"default:junglegrass",
-	"default:jungletree",
-	"default:dirt_with_grass",
-}
-
 
 creatures.register_mob({
 	name = ":creatures:spider",
@@ -60,7 +53,14 @@ creatures.register_mob({
 		search_type = "player",
 	},
 	spawning = {
-		abm_nodes = {spawn_on=spawn_nodes,},
+		abm_nodes = {
+			spawn_on = {
+				"group:leaves",
+				"default:junglegrass",
+				"default:jungletree",
+				"default:dirt_with_grass",
+			},
+		},
 		abm_interval = spidermob.spawn_interval,
 		abm_chance = spidermob.spawn_chance,
 		max_number = 3,
