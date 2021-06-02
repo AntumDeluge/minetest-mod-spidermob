@@ -13,9 +13,10 @@ if core.registered_items["farming:string"] then
 end
 
 local spawn_nodes = {
+	"group:leaves",
 	"default:junglegrass",
-	"default:jungleleaves",
 	"default:jungletree",
+	"default:dirt_with_grass",
 }
 
 
